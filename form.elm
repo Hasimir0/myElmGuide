@@ -80,7 +80,7 @@ update msg form =
 
 
 --VIEW
---view : Form -> x
+--view : Form -> xxx
 
 
 view form =
