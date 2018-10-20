@@ -8,6 +8,7 @@ import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
 import Element.Input as Input
+import Html as Html exposing (..)
 import String exposing (..)
 
 
@@ -20,7 +21,7 @@ main =
     Browser.sandbox
         { init = init
         , update = update
-        , view = view
+        , view = \form -> Element.layout [] (view form)
         }
 
 
@@ -80,9 +81,10 @@ update msg form =
 
 
 --VIEW
---view : Form -> xxx
+-- this code is broken (TYPE MISMATCH) and needs fixing
 
 
+view : Form -> Element msg
 view form =
     layout [] <|
         row [ centerY, centerX, spacing 10 ]
@@ -93,30 +95,30 @@ view form =
                 , width (px 250)
                 , height fill
                 ]
-                [ el [ centerX ] (text "My Simple Form")
+                [ el [ centerX ] (Element.text "My Simple Form")
                 , Input.username [ centerY ]
                     { label = Input.labelHidden "Name"
                     , onChange = \newName -> Name newName
-                    , placeholder = Just (Input.placeholder [] (text "username"))
+                    , placeholder = Just (Input.placeholder [] (Element.text "username"))
                     , text = form.name
                     }
                 , Input.text [ centerY ]
                     { label = Input.labelHidden "Age"
                     , onChange = \age -> Age age
-                    , placeholder = Just (Input.placeholder [] (text "age"))
+                    , placeholder = Just (Input.placeholder [] (Element.text "age"))
                     , text = form.age
                     }
                 , Input.newPassword []
                     { label = Input.labelHidden "Password"
                     , onChange = \newPass -> Password newPass
-                    , placeholder = Just (Input.placeholder [] (text "password"))
+                    , placeholder = Just (Input.placeholder [] (Element.text "password"))
                     , text = form.password
                     , show = False
                     }
                 , Input.currentPassword []
                     { label = Input.labelHidden "PasswordAgain"
                     , onChange = \againPass -> PasswordAgain againPass
-                    , placeholder = Just (Input.placeholder [] (text "repeat the password"))
+                    , placeholder = Just (Input.placeholder [] (Element.text "repeat the password"))
                     , text = form.passwordAgain
                     , show = False
                     }
@@ -129,7 +131,7 @@ view form =
                     , padding 10
                     ]
                     { onPress = Just Validate
-                    , label = text "Submit"
+                    , label = Element.text "Submit"
                     }
                 ]
             , column
@@ -195,4 +197,4 @@ viewValidation model =
             else
                 ( white, "empty filler" )
     in
-    el [ Font.color color ] (paragraph [] [ text message ])
+    el [ Font.color color ] (paragraph [] [ Element.text message ])
