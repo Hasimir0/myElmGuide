@@ -1,7 +1,5 @@
 module Main exposing (Form, Msg(..), init, main, update, view)
 
---import Html as Html exposing (..)
-
 import Browser
 import Char exposing (..)
 import Element exposing (..)
@@ -94,30 +92,30 @@ view form =
             , width (px 250)
             , height fill
             ]
-            [ el [ centerX ] (Element.text "My Simple Form")
+            [ el [ centerX ] (text "My Simple Form")
             , Input.username [ centerY ]
                 { label = Input.labelHidden "Name"
                 , onChange = \newName -> Name newName
-                , placeholder = Just (Input.placeholder [] (Element.text "username"))
+                , placeholder = Just (Input.placeholder [] (text "username"))
                 , text = form.name
                 }
             , Input.text [ centerY ]
                 { label = Input.labelHidden "Age"
                 , onChange = \age -> Age age
-                , placeholder = Just (Input.placeholder [] (Element.text "age"))
+                , placeholder = Just (Input.placeholder [] (text "age"))
                 , text = form.age
                 }
             , Input.newPassword []
                 { label = Input.labelHidden "Password"
                 , onChange = \newPass -> Password newPass
-                , placeholder = Just (Input.placeholder [] (Element.text "password"))
+                , placeholder = Just (Input.placeholder [] (text "password"))
                 , text = form.password
                 , show = False
                 }
             , Input.currentPassword []
                 { label = Input.labelHidden "PasswordAgain"
                 , onChange = \againPass -> PasswordAgain againPass
-                , placeholder = Just (Input.placeholder [] (Element.text "repeat the password"))
+                , placeholder = Just (Input.placeholder [] (text "repeat the password"))
                 , text = form.passwordAgain
                 , show = False
                 }
@@ -130,7 +128,7 @@ view form =
                 , padding 10
                 ]
                 { onPress = Just Validate
-                , label = Element.text "Submit"
+                , label = text "Submit"
                 }
             ]
         , column
@@ -196,4 +194,4 @@ viewValidation model =
             else
                 ( white, "empty filler" )
     in
-    el [ Font.color color ] (paragraph [] [ Element.text message ])
+    el [ Font.color color ] (paragraph [] [ text message ])
