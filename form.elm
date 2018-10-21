@@ -82,68 +82,67 @@ update msg form =
 
 --VIEW
 -- this code is broken (TYPE MISMATCH) and needs fixing
+--view : Form -> Element msg
 
 
-view : Form -> Element msg
 view form =
-    layout [] <|
-        row [ centerY, centerX, spacing 10 ]
-            [ column
-                [ centerX
-                , centerY
-                , spacing 10
-                , width (px 250)
-                , height fill
-                ]
-                [ el [ centerX ] (Element.text "My Simple Form")
-                , Input.username [ centerY ]
-                    { label = Input.labelHidden "Name"
-                    , onChange = \newName -> Name newName
-                    , placeholder = Just (Input.placeholder [] (Element.text "username"))
-                    , text = form.name
-                    }
-                , Input.text [ centerY ]
-                    { label = Input.labelHidden "Age"
-                    , onChange = \age -> Age age
-                    , placeholder = Just (Input.placeholder [] (Element.text "age"))
-                    , text = form.age
-                    }
-                , Input.newPassword []
-                    { label = Input.labelHidden "Password"
-                    , onChange = \newPass -> Password newPass
-                    , placeholder = Just (Input.placeholder [] (Element.text "password"))
-                    , text = form.password
-                    , show = False
-                    }
-                , Input.currentPassword []
-                    { label = Input.labelHidden "PasswordAgain"
-                    , onChange = \againPass -> PasswordAgain againPass
-                    , placeholder = Just (Input.placeholder [] (Element.text "repeat the password"))
-                    , text = form.passwordAgain
-                    , show = False
-                    }
-                , Input.button
-                    [ centerX
-                    , Background.color (rgb 0 0 0)
-                    , Font.color (rgb 1 1 1)
-                    , Border.rounded 10
-                    , Border.color (rgb 1 1 1)
-                    , padding 10
-                    ]
-                    { onPress = Just Validate
-                    , label = Element.text "Submit"
-                    }
-                ]
-            , column
-                [ centerX
-                , centerY
-                , Border.width 1
-                , spacing 10
-                , width (px 250)
-                , height fill
-                ]
-                [ el [ centerY, padding 30 ] (viewValidation form) ]
+    row [ centerY, centerX, spacing 10 ]
+        [ column
+            [ centerX
+            , centerY
+            , spacing 10
+            , width (px 250)
+            , height fill
             ]
+            [ el [ centerX ] (Element.text "My Simple Form")
+            , Input.username [ centerY ]
+                { label = Input.labelHidden "Name"
+                , onChange = \newName -> Name newName
+                , placeholder = Just (Input.placeholder [] (Element.text "username"))
+                , text = form.name
+                }
+            , Input.text [ centerY ]
+                { label = Input.labelHidden "Age"
+                , onChange = \age -> Age age
+                , placeholder = Just (Input.placeholder [] (Element.text "age"))
+                , text = form.age
+                }
+            , Input.newPassword []
+                { label = Input.labelHidden "Password"
+                , onChange = \newPass -> Password newPass
+                , placeholder = Just (Input.placeholder [] (Element.text "password"))
+                , text = form.password
+                , show = False
+                }
+            , Input.currentPassword []
+                { label = Input.labelHidden "PasswordAgain"
+                , onChange = \againPass -> PasswordAgain againPass
+                , placeholder = Just (Input.placeholder [] (Element.text "repeat the password"))
+                , text = form.passwordAgain
+                , show = False
+                }
+            , Input.button
+                [ centerX
+                , Background.color (rgb 0 0 0)
+                , Font.color (rgb 1 1 1)
+                , Border.rounded 10
+                , Border.color (rgb 1 1 1)
+                , padding 10
+                ]
+                { onPress = Just Validate
+                , label = Element.text "Submit"
+                }
+            ]
+        , column
+            [ centerX
+            , centerY
+            , Border.width 1
+            , spacing 10
+            , width (px 250)
+            , height fill
+            ]
+            [ el [ centerY, padding 30 ] (viewValidation form) ]
+        ]
 
 
 red : Color
