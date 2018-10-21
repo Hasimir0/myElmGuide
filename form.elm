@@ -20,7 +20,7 @@ main =
     Browser.sandbox
         { init = init
         , update = update
-        , view = \form -> Element.layout [] (view form)
+        , view = \form -> layout [] (view form)
         }
 
 
