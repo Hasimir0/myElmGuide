@@ -1,5 +1,7 @@
 module Main exposing (Form, Msg(..), init, main, update, view)
 
+--import Html as Html exposing (..)
+
 import Browser
 import Char exposing (..)
 import Element exposing (..)
@@ -8,7 +10,6 @@ import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
 import Element.Input as Input
-import Html as Html exposing (..)
 import String exposing (..)
 
 
@@ -81,10 +82,9 @@ update msg form =
 
 
 --VIEW
--- this code is broken (TYPE MISMATCH) and needs fixing
---view : Form -> Element msg
 
 
+view : Form -> Element Msg
 view form =
     row [ centerY, centerX, spacing 10 ]
         [ column
