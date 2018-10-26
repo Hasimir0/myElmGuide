@@ -1,6 +1,12 @@
 module Main exposing (Model, main)
 
 import Browser exposing (..)
+import Element exposing (..)
+import Element.Background as Background
+import Element.Border as Border
+import Element.Events as Events
+import Element.Font as Font
+import Element.Input as Input
 import Html exposing (..)
 import Html.Events exposing (..)
 import Random
@@ -15,7 +21,7 @@ main =
         { init = init
         , update = update
         , subscriptions = subscriptions
-        , view = view
+        , view = \model -> layout [] (view model)
         }
 
 
@@ -68,9 +74,19 @@ subscriptions model =
 -- VIEW
 
 
-view : Model -> Html Msg
+view : Model -> Element Msg
 view model =
-    div []
-        [ h1 [] [ text (String.fromInt model.dieFace) ]
-        , button [ onClick Roll ] [ text "Roll" ]
+    column [ centerX, centerY ]
+        [ el [ centerX ] (Element.text (String.fromInt model.dieFace))
+        , Input.button
+            [ centerX
+            , Background.color (rgb 0 0 0)
+            , Font.color (rgb 1 1 1)
+            , Border.rounded 10
+            , Border.color (rgb 1 1 1)
+            , padding 10
+            ]
+            { onPress = Just Roll
+            , label = Element.text "Submit"
+            }
         ]
