@@ -76,8 +76,12 @@ subscriptions model =
 
 view : Model -> Element Msg
 view model =
-    column [ centerX, centerY ]
-        [ el [ centerX ] (Element.text (String.fromInt model.dieFace))
+    column [ centerX, centerY, spacing 10 ]
+        [ {- el [ centerX ] (Element.text (String.fromInt model.dieFace)) -}
+          Element.image []
+            { src = "/img/dieFaces.svg"
+            , description = "die as image"
+            }
         , Input.button
             [ centerX
             , Background.color (rgb 0 0 0)
