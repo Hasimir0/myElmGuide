@@ -10,6 +10,7 @@ import Element.Input as Input
 import Html exposing (..)
 import Html.Events exposing (..)
 import Random
+import String exposing (..)
 
 
 
@@ -77,10 +78,9 @@ subscriptions model =
 view : Model -> Element Msg
 view model =
     column [ centerX, centerY, spacing 10 ]
-        [ {- el [ centerX ] (Element.text (String.fromInt model.dieFace)) -}
-          Element.image []
-            { src = "/img/dieFaces.svg"
-            , description = "die as image"
+        [ Element.image [ centerX ]
+            { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
+            , description = "die " ++ String.fromInt model.dieFace ++ " as image"
             }
         , Input.button
             [ centerX
