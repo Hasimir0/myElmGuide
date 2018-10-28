@@ -78,10 +78,16 @@ subscriptions model =
 view : Model -> Element Msg
 view model =
     column [ centerX, centerY, spacing 10 ]
-        [ Element.image [ centerX ]
-            { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
-            , description = "die " ++ String.fromInt model.dieFace ++ " as image"
-            }
+        [ row [ spacing 10 ]
+            [ Element.image [ centerX ]
+                { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
+                , description = "die " ++ String.fromInt model.dieFace ++ " as image"
+                }
+            , Element.image [ centerX ]
+                { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
+                , description = "die " ++ String.fromInt model.dieFace ++ " as image"
+                }
+            ]
         , Input.button
             [ centerX
             , Background.color (rgb 0 0 0)
@@ -91,6 +97,6 @@ view model =
             , padding 10
             ]
             { onPress = Just Roll
-            , label = Element.text "Submit"
+            , label = Element.text "Roll!"
             }
         ]
