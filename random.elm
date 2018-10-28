@@ -82,11 +82,11 @@ view : Model -> Element Msg
 view model =
     column [ centerX, centerY, Element.spacing 10 ]
         [ row [ Element.spacing 10 ]
-            [ Element.image [ centerX ]
+            [ Element.image [ centerX, Border.width 1, Border.color (rgb 1 0 0) ]
                 { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
                 , description = "die " ++ String.fromInt model.dieFace ++ " as image"
                 }
-            , svgDie
+            , html svgDie
             ]
         , Input.button
             [ centerX
@@ -110,11 +110,12 @@ svgDie =
         ]
         [ rect
             [ x "10"
-            , y "10"
-            , Svg.Attributes.width "100"
-            , Svg.Attributes.height "100"
-            , rx "15"
-            , ry "15"
+            , y "20"
+            , Svg.Attributes.width "78"
+            , Svg.Attributes.height "78"
+            , rx "30"
+            , ry "30"
+            , Svg.Attributes.style "fill:white;stroke:black;stroke-width:1"
             ]
             []
         ]
