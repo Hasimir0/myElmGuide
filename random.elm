@@ -81,12 +81,12 @@ subscriptions model =
 view : Model -> Element Msg
 view model =
     column [ centerX, centerY, Element.spacing 10 ]
-        [ row [ Element.spacing 10 ]
-            [ Element.image [ centerX, Border.width 1, Border.color (rgb 1 0 0) ]
+        [ row [ Element.spacing 30 ]
+            [ Element.image [ centerX ]
                 { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
                 , description = "die " ++ String.fromInt model.dieFace ++ " as image"
                 }
-            , html svgDie
+            , html (svgDie model)
             ]
         , Input.button
             [ centerX
@@ -102,15 +102,15 @@ view model =
         ]
 
 
-svgDie =
+svgDie model =
     svg
-        [ Svg.Attributes.width "120"
-        , Svg.Attributes.height "120"
-        , viewBox "0 0 120 120"
+        [ Svg.Attributes.width "80"
+        , Svg.Attributes.height "80"
+        , viewBox "0 0 80 80"
         ]
         [ rect
-            [ x "10"
-            , y "20"
+            [ x "1"
+            , y "1"
             , Svg.Attributes.width "78"
             , Svg.Attributes.height "78"
             , rx "30"
@@ -118,4 +118,11 @@ svgDie =
             , Svg.Attributes.style "fill:white;stroke:black;stroke-width:1"
             ]
             []
+        , Svg.text_
+            [ x "32"
+            , y "52"
+            , Svg.Attributes.fill "black"
+            , Svg.Attributes.style "font-size:30;font-weight:bold"
+            ]
+            [ Svg.text (String.fromInt model.dieFace) ]
         ]
