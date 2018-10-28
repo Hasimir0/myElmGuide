@@ -8,9 +8,12 @@ import Element.Events as Events
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Random
 import String exposing (..)
+import Svg exposing (..)
+import Svg.Attributes exposing (..)
 
 
 
@@ -77,16 +80,13 @@ subscriptions model =
 
 view : Model -> Element Msg
 view model =
-    column [ centerX, centerY, spacing 10 ]
-        [ row [ spacing 10 ]
+    column [ centerX, centerY, Element.spacing 10 ]
+        [ row [ Element.spacing 10 ]
             [ Element.image [ centerX ]
                 { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
                 , description = "die " ++ String.fromInt model.dieFace ++ " as image"
                 }
-            , Element.image [ centerX ]
-                { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
-                , description = "die " ++ String.fromInt model.dieFace ++ " as image"
-                }
+            , svgDie
             ]
         , Input.button
             [ centerX
@@ -99,4 +99,22 @@ view model =
             { onPress = Just Roll
             , label = Element.text "Roll!"
             }
+        ]
+
+
+svgDie =
+    svg
+        [ Svg.Attributes.width "120"
+        , Svg.Attributes.height "120"
+        , viewBox "0 0 120 120"
+        ]
+        [ rect
+            [ x "10"
+            , y "10"
+            , Svg.Attributes.width "100"
+            , Svg.Attributes.height "100"
+            , rx "15"
+            , ry "15"
+            ]
+            []
         ]
