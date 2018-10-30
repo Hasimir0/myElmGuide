@@ -36,7 +36,16 @@ main =
 type alias Model =
     { dieFace : Int }
 
-type CheatFace = One | Two | Three | Four | Five | Six
+
+
+{- type CheatFace
+   = One
+   | Two
+   | Three
+   | Four
+   | Five
+   | Six
+-}
 
 
 init : () -> ( Model, Cmd Msg )
@@ -66,24 +75,23 @@ update msg model =
             ( Model newFace
             , Cmd.none
             )
-        
+
         RollBetter ->
             ( model
-            , Random.generate RollBetter cheatRules
-                
+            , Random.generate NewFace cheatRules
+            )
 
 
-cheatRules : Random.Generator CheatFace
-cheatRules  =                
+cheatRules : Random.Generator Int
+cheatRules =
     Random.weighted
-        (10, One)
-        [ (10, Two)
-        , (10, Three)
-        , (10, Four)
-        , (20, Five)
-        , (40, Six)
+        ( 5, 1 )
+        [ ( 5, 2 )
+        , ( 5, 3 )
+        , ( 5, 4 )
+        , ( 40, 5 )
+        , ( 40, 6 )
         ]
-                
 
 
 
@@ -102,12 +110,15 @@ subscriptions model =
 view : Model -> Element Msg
 view model =
     row
-        [ centerX, centerY, Element.spacing 10
+        [ centerX
+        , centerY
+        , Element.spacing 10
 
         {- , Border.width 1, Border.color (rgb 0 0 0) -}
         ]
         [ column
-            [ centerX, Element.spacing 10
+            [ centerX
+            , Element.spacing 10
 
             {- , Border.width 1, Border.color (rgb 1 0 0) -}
             ]
@@ -195,9 +206,6 @@ rollTwo =
         { onPress = Just RollBetter
         , label = Element.text "Roll Better!"
         }
-
-
-
 
 
 svgDie2 : Model -> Html Msg
