@@ -80,29 +80,104 @@ subscriptions model =
 
 view : Model -> Element Msg
 view model =
-    column [ centerX, centerY, Element.spacing 10 ]
-        [ row [ Element.spacing 30 ]
-            [ Element.image [ centerX ]
-                { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
-                , description = "die " ++ String.fromInt model.dieFace ++ " as image"
-                }
-            , el [] (html (svgDie model))
+    row
+        [ centerX, centerY, Element.spacing 10
+
+        {- , Border.width 1, Border.color (rgb 0 0 0) -}
+        ]
+        [ column
+            [ centerX, Element.spacing 10
+
+            {- , Border.width 1, Border.color (rgb 1 0 0) -}
             ]
-        , Input.button
-            [ centerX
-            , Background.color (rgb 0 0 0)
-            , Font.color (rgb 1 1 1)
-            , Border.rounded 10
-            , Border.color (rgb 1 1 1)
-            , padding 10
+            [ row
+                [ Element.spacing 10
+
+                {- , Border.width 1, Border.color (rgb 0 1 0) -}
+                ]
+                [ imgDie model
+                , el [] (html (svgDie1 model))
+                ]
+            , rollOne
             ]
-            { onPress = Just Roll
-            , label = Element.text "Roll!"
-            }
+        , column
+            [ Element.spacing 10
+
+            {- , Border.width 1, Border.color (rgb 0 0 1) -}
+            ]
+            [ el [ centerX ] (html (svgDie2 model))
+            , rollTwo
+            ]
         ]
 
 
-svgDie model =
+imgDie : Model -> Element Msg
+imgDie model =
+    Element.image [ centerX ]
+        { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
+        , description = "die " ++ String.fromInt model.dieFace ++ " as image"
+        }
+
+
+rollOne : Element Msg
+rollOne =
+    Input.button
+        [ centerX
+        , Background.color (rgb 0 0 0)
+        , Font.color (rgb 1 1 1)
+        , Border.rounded 10
+        , Border.color (rgb 1 1 1)
+        , padding 10
+        ]
+        { onPress = Just Roll
+        , label = Element.text "Roll!"
+        }
+
+
+svgDie1 : Model -> Html Msg
+svgDie1 model =
+    svg
+        [ Svg.Attributes.width "80"
+        , Svg.Attributes.height "80"
+        , viewBox "0 0 80 80"
+        ]
+        [ rect
+            [ x "1"
+            , y "1"
+            , Svg.Attributes.width "78"
+            , Svg.Attributes.height "78"
+            , rx "30"
+            , ry "30"
+            , Svg.Attributes.style "fill:white;stroke:black;stroke-width:1"
+            ]
+            []
+        , Svg.text_
+            [ x "32"
+            , y "52"
+            , Svg.Attributes.fill "black"
+            , Svg.Attributes.style "font-size:30;font-weight:bold"
+            ]
+            [ Svg.text (String.fromInt model.dieFace) ]
+        ]
+
+
+rollTwo : Element Msg
+rollTwo =
+    Input.button
+        [ centerX
+        , Background.color (rgb 0 0 0)
+        , Font.color (rgb 1 1 1)
+        , Border.rounded 10
+        , Border.color (rgb 1 1 1)
+        , padding 10
+        ]
+        { onPress = Just Roll
+        , label = Element.text "Roll Better!"
+        }
+
+
+svgDie2 : Model -> Html Msg
+svgDie2 model =
     svg
         [ Svg.Attributes.width "80"
         , Svg.Attributes.height "80"
