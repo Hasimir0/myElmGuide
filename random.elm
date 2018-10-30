@@ -37,17 +37,6 @@ type alias Model =
     { dieFace : Int }
 
 
-
-{- type CheatFace
-   = One
-   | Two
-   | Three
-   | Four
-   | Five
-   | Six
--}
-
-
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( Model 1, Cmd.none )
@@ -109,36 +98,38 @@ subscriptions model =
 
 view : Model -> Element Msg
 view model =
-    row
+    column
         [ centerX
         , centerY
         , Element.spacing 10
-
-        {- , Border.width 1, Border.color (rgb 0 0 0) -}
         ]
-        [ column
-            [ centerX
-            , Element.spacing 10
+        [ rollMore
+        , row
+            [{- , Border.width 1 -} {- , Border.color (rgb 0 0 0) -}]
+            [ column
+                [ centerX
+                , Element.spacing 10
 
-            {- , Border.width 1, Border.color (rgb 1 0 0) -}
-            ]
-            [ row
+                {- , Border.width 1 -} {- , Border.color (rgb 1 0 0) -}
+                ]
+                [ row
+                    [ Element.spacing 10
+
+                    {- , Border.width 1 -} {- , Border.color (rgb 0 1 0) -}
+                    ]
+                    [ imgDie model
+                    , el [] (html (svgDie1 model))
+                    ]
+                , rollOne
+                ]
+            , column
                 [ Element.spacing 10
 
-                {- , Border.width 1, Border.color (rgb 0 1 0) -}
+                {- , Border.width 1 -} {- , Border.color (rgb 0 0 1) -}
                 ]
-                [ imgDie model
-                , el [] (html (svgDie1 model))
+                [ el [ centerX ] (html (svgDie2 model))
+                , rollTwo
                 ]
-            , rollOne
-            ]
-        , column
-            [ Element.spacing 10
-
-            {- , Border.width 1, Border.color (rgb 0 0 1) -}
-            ]
-            [ el [ centerX ] (html (svgDie2 model))
-            , rollTwo
             ]
         ]
 
@@ -233,3 +224,18 @@ svgDie2 model =
             ]
             [ Svg.text (String.fromInt model.dieFace) ]
         ]
+
+
+rollMore : Element Msg
+rollMore =
+    Input.button
+        [ centerX
+        , Background.color (rgb 0 0 0)
+        , Font.color (rgb 1 1 1)
+        , Border.rounded 10
+        , Border.color (rgb 1 1 1)
+        , padding 10
+        ]
+        { onPress = Just Roll
+        , label = Element.text "Roll More!"
+        }
