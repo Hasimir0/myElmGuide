@@ -86,7 +86,7 @@ view model =
                 { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
                 , description = "die " ++ String.fromInt model.dieFace ++ " as image"
                 }
-            , html (svgDie model)
+            , el [] (html (svgDie model))
             ]
         , Input.button
             [ centerX
