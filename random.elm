@@ -52,6 +52,10 @@ type Msg
     | RollBetter
 
 
+
+--    | RollMore
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -71,6 +75,14 @@ update msg model =
             )
 
 
+
+{- RollMore ->
+   (
+      randomCheck
+   )
+-}
+
+
 cheatRules : Random.Generator Int
 cheatRules =
     Random.weighted
@@ -84,6 +96,11 @@ cheatRules =
 
 
 
+{- randomCheck =
+
+   randomNumber i =
+       if i < 6 then
+-}
 -- SUBSCRIPTIONS
 
 
