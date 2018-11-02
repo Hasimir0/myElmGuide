@@ -52,16 +52,12 @@ type Msg
     | RollBetter
 
 
-
---    | RollMore
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Roll ->
             ( model
-            , Random.generate NewFace (Random.int 1 6)
+            , Random.generate NewFace rollRules
             )
 
         NewFace newFace ->
@@ -73,14 +69,6 @@ update msg model =
             ( model
             , Random.generate NewFace cheatRules
             )
-
-
-
-{- RollMore ->
-   (
-      randomCheck
-   )
--}
 
 
 cheatRules : Random.Generator Int
@@ -95,12 +83,12 @@ cheatRules =
         ]
 
 
+rollRules : Random.Generator Int
+rollRules =
+    Random.int 1 6
 
-{- randomCheck =
 
-   randomNumber i =
-       if i < 6 then
--}
+
 -- SUBSCRIPTIONS
 
 
@@ -151,14 +139,6 @@ view model =
         ]
 
 
-imgDie : Model -> Element Msg
-imgDie model =
-    Element.image [ centerX ]
-        { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
-        , description = "die " ++ String.fromInt model.dieFace ++ " as image"
-        }
-
-
 rollOne : Element Msg
 rollOne =
     Input.button
@@ -171,6 +151,44 @@ rollOne =
         ]
         { onPress = Just Roll
         , label = Element.text "Roll!"
+        }
+
+
+rollTwo : Element Msg
+rollTwo =
+    Input.button
+        [ centerX
+        , Background.color (rgb 0 0 0)
+        , Font.color (rgb 1 1 1)
+        , Border.rounded 10
+        , Border.color (rgb 1 1 1)
+        , padding 10
+        ]
+        { onPress = Just RollBetter
+        , label = Element.text "Roll Better!"
+        }
+
+
+rollMore : Element Msg
+rollMore =
+    Input.button
+        [ centerX
+        , Background.color (rgb 0 0 0)
+        , Font.color (rgb 1 1 1)
+        , Border.rounded 10
+        , Border.color (rgb 1 1 1)
+        , padding 10
+        ]
+        { onPress = Just Roll
+        , label = Element.text "Roll More!"
+        }
+
+
+imgDie : Model -> Element Msg
+imgDie model =
+    Element.image [ centerX ]
+        { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
+        , description = "die " ++ String.fromInt model.dieFace ++ " as image"
         }
 
 
@@ -201,21 +219,6 @@ svgDie1 model =
         ]
 
 
-rollTwo : Element Msg
-rollTwo =
-    Input.button
-        [ centerX
-        , Background.color (rgb 0 0 0)
-        , Font.color (rgb 1 1 1)
-        , Border.rounded 10
-        , Border.color (rgb 1 1 1)
-        , padding 10
-        ]
-        { onPress = Just RollBetter
-        , label = Element.text "Roll Better!"
-        }
-
-
 svgDie2 : Model -> Html Msg
 svgDie2 model =
     svg
@@ -241,18 +244,3 @@ svgDie2 model =
             ]
             [ Svg.text (String.fromInt model.dieFace) ]
         ]
-
-
-rollMore : Element Msg
-rollMore =
-    Input.button
-        [ centerX
-        , Background.color (rgb 0 0 0)
-        , Font.color (rgb 1 1 1)
-        , Border.rounded 10
-        , Border.color (rgb 1 1 1)
-        , padding 10
-        ]
-        { onPress = Just Roll
-        , label = Element.text "Roll More!"
-        }
