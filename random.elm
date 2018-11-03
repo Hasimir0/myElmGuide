@@ -34,12 +34,14 @@ main =
 
 
 type alias Model =
-    { dieFace : Int }
+    { dieFace : Int
+    , reRoll : Int
+    }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model 1, Cmd.none )
+    ( Model 1 1, Cmd.none )
 
 
 
@@ -52,6 +54,11 @@ type Msg
     | RollBetter
 
 
+
+--    | RollMore
+--| Repeat Int
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -61,7 +68,7 @@ update msg model =
             )
 
         NewFace newFace ->
-            ( Model newFace
+            ( { model | dieFace = newFace }
             , Cmd.none
             )
 
@@ -69,6 +76,12 @@ update msg model =
             ( model
             , Random.generate NewFace cheatRules
             )
+
+
+
+--        RollMore ->
+--            (model
+--            , Random.generate Repeat rollRules)
 
 
 cheatRules : Random.Generator Int
@@ -89,6 +102,8 @@ rollRules =
 
 
 
+--moreRandom =
+--    Random.generate Repeat rollRules
 -- SUBSCRIPTIONS
 
 
