@@ -49,9 +49,9 @@ init _ =
 
 
 type Msg
-    = Roll
-    | RollBetter
-    | RollMore
+    = ButtonRoll
+    | ButtonCheat
+    | ButtonMore
     | NewFace Int
     | Repeat Int
 
@@ -62,7 +62,7 @@ type Msg
 
 update msg model =
     case msg of
-        Roll ->
+        ButtonRoll ->
             ( model, rollDice )
 
         NewFace newFace ->
@@ -70,10 +70,10 @@ update msg model =
             , Cmd.none
             )
 
-        RollBetter ->
+        ButtonCheat ->
             ( model, rollBetter )
 
-        RollMore ->
+        ButtonMore ->
             ( model, rollRandom )
 
         Repeat repetition ->
@@ -84,13 +84,16 @@ update msg model =
 
 randomRoll model =
     if model.reRoll > 0 then
-        ( rollDice
-        , { model | reRoll = model.reRoll - 1 }
-        , randomRoll
-        )
+        { action = rollDice
+        , counter = { model | reRoll = model.reRoll - 1 }
+        , recursion = randomRoll
+        }
 
     else
-        Cmd.none
+        { action = rollDice
+        , counter = { model | reRoll = model.reRoll }
+        , recursion = { model | reRoll = 1 }
+        }
 
 
 rollDice =
@@ -183,7 +186,7 @@ rollOne =
         , Border.color (rgb 1 1 1)
         , padding 10
         ]
-        { onPress = Just Roll
+        { onPress = Just ButtonRoll
         , label = Element.text "Roll!"
         }
 
@@ -198,7 +201,7 @@ rollTwo =
         , Border.color (rgb 1 1 1)
         , padding 10
         ]
-        { onPress = Just RollBetter
+        { onPress = Just ButtonCheat
         , label = Element.text "Roll Better!"
         }
 
@@ -213,7 +216,7 @@ rollMore =
         , Border.color (rgb 1 1 1)
         , padding 10
         ]
-        { onPress = Just RollMore
+        { onPress = Just ButtonMore
         , label = Element.text "Roll More!"
         }
 
