@@ -53,7 +53,8 @@ type Msg
     | ButtonCheat
     | ButtonMore
     | NewFace Int
-    | Repeat Int
+    | Counter Int
+    | Repeat 
 
 
 
@@ -76,23 +77,26 @@ update msg model =
         ButtonMore ->
             ( model, rollRandom )
 
-        Repeat repetition ->
+        Counter repetition ->
             ( { model | reRoll = repetition }
             , randomRoll
             )
+        
+        Repeat  ->
+            (model, randomRoll)
 
 
 randomRoll model =
     if model.reRoll > 0 then
         { action = rollDice
         , counter = { model | reRoll = model.reRoll - 1 }
-        , recursion = randomRoll
+        , recursion = Repeat
         }
 
     else
         { action = rollDice
         , counter = { model | reRoll = model.reRoll }
-        , recursion = { model | reRoll = 1 }
+        , recursion = ButtonRoll
         }
 
 
@@ -105,7 +109,7 @@ rollBetter =
 
 
 rollRandom =
-    Random.generate Repeat rollRules
+    Random.generate Counter rollRules
 
 
 cheatRules : Random.Generator Int
