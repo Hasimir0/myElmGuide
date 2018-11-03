@@ -50,22 +50,20 @@ init _ =
 
 type Msg
     = Roll
-    | NewFace Int
     | RollBetter
+    | RollMore
+    | NewFace Int
+    | Repeat Int
 
 
 
---    | RollMore
---| Repeat Int
+--update : Msg -> Model -> ( Model, Cmd Msg )
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Roll ->
-            ( model
-            , Random.generate NewFace rollRules
-            )
+            ( model, rollDice )
 
         NewFace newFace ->
             ( { model | dieFace = newFace }
@@ -73,15 +71,38 @@ update msg model =
             )
 
         RollBetter ->
-            ( model
-            , Random.generate NewFace cheatRules
+            ( model, rollBetter )
+
+        RollMore ->
+            ( model, rollRandom )
+
+        Repeat repetition ->
+            ( { model | reRoll = repetition }
+            , randomRoll
             )
 
 
+randomRoll model =
+    if model.reRoll > 0 then
+        ( rollDice
+        , { model | reRoll = model.reRoll - 1 }
+        , randomRoll
+        )
 
---        RollMore ->
---            (model
---            , Random.generate Repeat rollRules)
+    else
+        Cmd.none
+
+
+rollDice =
+    Random.generate NewFace rollRules
+
+
+rollBetter =
+    Random.generate NewFace cheatRules
+
+
+rollRandom =
+    Random.generate Repeat rollRules
 
 
 cheatRules : Random.Generator Int
@@ -102,8 +123,6 @@ rollRules =
 
 
 
---moreRandom =
---    Random.generate Repeat rollRules
 -- SUBSCRIPTIONS
 
 
@@ -194,7 +213,7 @@ rollMore =
         , Border.color (rgb 1 1 1)
         , padding 10
         ]
-        { onPress = Just Roll
+        { onPress = Just RollMore
         , label = Element.text "Roll More!"
         }
 
