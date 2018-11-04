@@ -54,7 +54,7 @@ type Msg
     | ButtonMore
     | NewFace Int
     | Counter Int
-    | Repeat 
+    | Repeat
 
 
 
@@ -81,9 +81,9 @@ update msg model =
             ( { model | reRoll = repetition }
             , randomRoll
             )
-        
-        Repeat  ->
-            (model, randomRoll)
+
+        Repeat ->
+            ( model, randomRoll )
 
 
 randomRoll model =
