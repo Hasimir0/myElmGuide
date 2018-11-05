@@ -54,11 +54,6 @@ type Msg
     | RollBetter
 
 
-
---    | RollMore
---| Repeat Int
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -76,12 +71,6 @@ update msg model =
             ( model
             , Random.generate NewFace cheatRules
             )
-
-
-
---        RollMore ->
---            (model
---            , Random.generate Repeat rollRules)
 
 
 cheatRules : Random.Generator Int
@@ -102,8 +91,6 @@ rollRules =
 
 
 
---moreRandom =
---    Random.generate Repeat rollRules
 -- SUBSCRIPTIONS
 
 
