@@ -86,6 +86,7 @@ update msg model =
             ( model, randomRoll )
 
 
+randomRoll : Model -> {action:,counter:Model, recursion:Cmd}
 randomRoll model =
     if model.reRoll > 0 then
         { action = rollDice
