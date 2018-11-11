@@ -108,7 +108,7 @@ view model =
         , centerY
         , Element.spacing 10
         ]
-        [ rollMore
+        [ buttonBounce
         , row
             [{- , Border.width 1 -} {- , Border.color (rgb 0 0 0) -}]
             [ column
@@ -122,25 +122,25 @@ view model =
 
                     {- , Border.width 1 -} {- , Border.color (rgb 0 1 0) -}
                     ]
-                    [ imgDie model
-                    , el [] (html (svgDie1 model))
+                    [ dieIMG model
+                    , el [] (html (dieSVG1 model))
                     ]
-                , rollOne
+                , buttonRoll
                 ]
             , column
                 [ Element.spacing 10
 
                 {- , Border.width 1 -} {- , Border.color (rgb 0 0 1) -}
                 ]
-                [ el [ centerX ] (html (svgDie2 model))
-                , rollTwo
+                [ el [ centerX ] (html (dieSVG2 model))
+                , buttonCheat
                 ]
             ]
         ]
 
 
-rollOne : Element Msg
-rollOne =
+buttonRoll : Element Msg
+buttonRoll =
     Input.button
         [ centerX
         , Background.color (rgb 0 0 0)
@@ -154,8 +154,8 @@ rollOne =
         }
 
 
-rollTwo : Element Msg
-rollTwo =
+buttonCheat : Element Msg
+buttonCheat =
     Input.button
         [ centerX
         , Background.color (rgb 0 0 0)
@@ -169,8 +169,8 @@ rollTwo =
         }
 
 
-rollMore : Element Msg
-rollMore =
+buttonBounce : Element Msg
+buttonBounce =
     Input.button
         [ centerX
         , Background.color (rgb 0 0 0)
@@ -184,16 +184,16 @@ rollMore =
         }
 
 
-imgDie : Model -> Element Msg
-imgDie model =
+dieIMG : Model -> Element Msg
+dieIMG model =
     Element.image [ centerX ]
         { src = "/img/die0" ++ String.fromInt model.dieFace ++ ".gif"
         , description = "die " ++ String.fromInt model.dieFace ++ " as image"
         }
 
 
-svgDie1 : Model -> Html Msg
-svgDie1 model =
+dieSVG1 : Model -> Html Msg
+dieSVG1 model =
     svg
         [ Svg.Attributes.width "80"
         , Svg.Attributes.height "80"
@@ -219,8 +219,8 @@ svgDie1 model =
         ]
 
 
-svgDie2 : Model -> Html Msg
-svgDie2 model =
+dieSVG2 : Model -> Html Msg
+dieSVG2 model =
     svg
         [ Svg.Attributes.width "80"
         , Svg.Attributes.height "80"
