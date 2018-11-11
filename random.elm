@@ -1,5 +1,8 @@
 module Main exposing (Model, main)
 
+--import String exposing (..)
+--import Html.Attributes exposing (..)
+
 import Browser exposing (..)
 import Element exposing (..)
 import Element.Background as Background
@@ -8,10 +11,8 @@ import Element.Events as Events
 import Element.Font as Font
 import Element.Input as Input
 import Html exposing (..)
-import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Random
-import String exposing (..)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
 
@@ -35,13 +36,14 @@ main =
 
 type alias Model =
     { dieFace : Int
-    , reRoll : Int
     }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model 1 1, Cmd.none )
+    ( Model 1, Cmd.none )
+
+
 
 
 
@@ -73,6 +75,7 @@ update msg model =
             )
 
 
+-- RANDOM GENERATORS
 cheatRules : Random.Generator Int
 cheatRules =
     Random.weighted
@@ -89,6 +92,10 @@ rollRules : Random.Generator Int
 rollRules =
     Random.int 1 6
 
+reRollCount : Random.Generator (List Int)
+reRollCount =
+    rollRules
+        |> Random.andThen (\number -> Random.list number rollRules)
 
 
 -- SUBSCRIPTIONS
