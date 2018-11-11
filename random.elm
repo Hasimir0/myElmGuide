@@ -1,8 +1,5 @@
 module Main exposing (Model, main)
 
---import String exposing (..)
---import Html.Attributes exposing (..)
-
 import Browser exposing (..)
 import Element exposing (..)
 import Element.Background as Background
@@ -18,19 +15,6 @@ import Svg.Attributes exposing (..)
 
 
 
--- MAIN
-
-
-main =
-    Browser.element
-        { init = init
-        , update = update
-        , subscriptions = subscriptions
-        , view = \model -> layout [] (view model)
-        }
-
-
-
 -- MODEL
 
 
@@ -39,11 +23,15 @@ type alias Model =
     }
 
 
+type Status
+    = Initial
+    | Bouncing Int (List Int)
+    | Final Int
+
+
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( Model 1, Cmd.none )
-
-
 
 
 
@@ -75,7 +63,10 @@ update msg model =
             )
 
 
+
 -- RANDOM GENERATORS
+
+
 cheatRules : Random.Generator Int
 cheatRules =
     Random.weighted
@@ -92,18 +83,18 @@ rollRules : Random.Generator Int
 rollRules =
     Random.int 1 6
 
+
 reRollCount : Random.Generator (List Int)
 reRollCount =
     rollRules
         |> Random.andThen (\number -> Random.list number rollRules)
 
 
--- SUBSCRIPTIONS
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
+manyRolls : Random.Generator Status
+manyRolls =
+    Random.map2 Bouncing
+        rollRules
+        reRollCount
 
 
 
@@ -253,3 +244,25 @@ svgDie2 model =
             ]
             [ Svg.text (String.fromInt model.dieFace) ]
         ]
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
+
+
+
+-- MAIN
+
+
+main =
+    Browser.element
+        { init = init
+        , update = update
+        , subscriptions = subscriptions
+        , view = \model -> layout [] (view model)
+        }
